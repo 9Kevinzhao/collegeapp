@@ -1,0 +1,21 @@
+
+
+<h1 class="addacollege">Add a college!</h1>
+
+{{#if error}} <span>{{error}}</span>{{/if}}
+<form class="addcollege" action="/users/addcollege" method="post">
+
+    <select size="1"  name="category">
+      <option value="public">public</option>
+      <option value="private">private</option>
+    </select>
+    <select size="1"  name="name">
+    <option value="harvard">harvard</option>
+    <option value="MIT">MIT</option>
+    <option value="michigan">michigan</option>
+
+    </select>
+
+    <input type="submit" class="btn btn-primary" value="Save">
+</form>
+<a class="btn btn-default" href="/">Back</a>

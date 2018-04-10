@@ -1,0 +1,61 @@
+
+.body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.header{
+    background-color: green;
+    text-align: center;
+
+}
+
+button{
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 1px 100px;
+  font-size: 20px;
+  width: 19%;
+  height: 100px;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: yellow;
+  color: white;
+}
+
+div{
+  height: 50px
+  width: 20px;
+}
+body{
+background-image:url("collegeapp/public/main.jpg")
+    }
+/*addacollege*/
+.addcollege{
+  padding-left: 500px;
+  border: 5px blue solid;
+}
+
+.addacollege{
+  text-align: center;
+  border: 5px orange solid;
+}
+
+/*Colleges*/
+
+
+
+
+
+/*Courses at college*/
+
+
+
+/*display college*/
+.display{
+span{
+  text-align: center;
+}
+}
