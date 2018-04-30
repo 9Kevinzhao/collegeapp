@@ -11,12 +11,45 @@ client.on('connect',function(){
 });
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render('myFavoriteCollege');
-});
+
+
 router.get('/addcollege',function (req, res, next){
     res.render('addcollege');
 });
+
+router.get('/addFavoriteCollege',function (req, res, next){
+    res.render('addFavoriteCollege');
+});
+
+router.get('/addToDatabase',function (req, res, next){
+    res.render('addToDatabase');
+});
+
+router.get('/addCourse',function (req, res, next){
+    res.render('addCourse');
+});
+
+router.post('/addCourse', function(req, res, next){
+
+    let college = req.body.college;
+    let course = req.body.name;
+    client.hmset(college:course,
+     [
+        'college', college,
+        'course', course
+    ],function(err,reply){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(reply);
+            res.redirect('/');
+
+        }
+    }
+    );
+});
+
 router.post('/addcollege', function(req, res, next){
 
     let category = req.body.category;
@@ -37,6 +70,51 @@ router.post('/addcollege', function(req, res, next){
     );
 });
 
+router.get('/goto/:id',function (req, res){
+    let id = req.params.id;
+    client.hgetall(id,function(err,obj){
+        if(!obj){
+            console.log(id);
+            res.render('index',{
+                error: 'event does not exist',
+                title: 'NO!'
+            });
+        }
+        else{
+            console.log(req.params.id);
+            let courselist = {};
+          client.keys(id:'*', function(err, data){
+            for(let d=0; d<data.length; d++){
+                let item = "c"+d;
+                courselist[item] = data[d];
+            }
+
+            obj.id = req.params.id;
+            res.render('coursesAtCollege', courselist);
+          }
+        }
+    })
+}));
+
+router.get('/',function(req, res, next){
+
+    client.keys('*', function(err, data){
+        if(err){
+            console.log(err);
+        }
+        else{
+            let schoolist = {};
+
+            for(let d=0; d<data.length; d++){
+                let item = "s"+d;
+                schoolist[item] = data[d];
+            }
+            res.render('myFavoriteCollege', schoolist);
+            console.log(data);
+            console.log(schoolist.schoolist1);
+        }
+    });
+});
 
 router.post('/search/',function (req, res, next){
   let id=req.body.name;
@@ -54,7 +132,5 @@ router.post('/search/',function (req, res, next){
     }
   })
 });
-
-
 
 module.exports = router;

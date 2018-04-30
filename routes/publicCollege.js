@@ -4,9 +4,9 @@ var router = express.Router();
 
 var redis = require('redis');
 
-//const client = 
+//const client =
 router.get('/', function(req, res, next) {
-  res.render('colleges');
+  res.render('publicColleges');
 });
 router.get('/berkeley', function(req, res, next) {
 

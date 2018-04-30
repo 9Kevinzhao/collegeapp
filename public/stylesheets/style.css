@@ -9,15 +9,15 @@
     text-align: center;
 
 }
-
+.buttons{
+    border: 5px black solid;
+}
 button{
   background-color: #4CAF50; /* Green */
   color: white;
-  padding: 1px 100px;
   font-size: 20px;
-  width: 19%;
-  height: 100px;
-  margin-top: 20px;
+  width: 19.7%;
+  height: 50px;
 }
 
 button:hover {
