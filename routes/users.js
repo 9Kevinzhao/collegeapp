@@ -33,7 +33,8 @@ router.post('/addCourse', function(req, res, next){
 
     let college = req.body.college;
     let course = req.body.name;
-    client.hmset(college:course,
+    let key = college+":"+course;
+    client.hmset(key,
      [
         'college', college,
         'course', course
@@ -91,10 +92,10 @@ router.get('/goto/:id',function (req, res){
 
             obj.id = req.params.id;
             res.render('coursesAtCollege', courselist);
-          }
+          })
         }
     })
-}));
+});
 
 router.get('/',function(req, res, next){
 

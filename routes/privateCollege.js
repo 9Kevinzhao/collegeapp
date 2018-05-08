@@ -14,10 +14,13 @@ router.get('/',function(req, res, next){
         }
         else{
             let schoolist = {};
-
+            let c=-1
             for(let d=0; d<data.length; d++){
-                let item = "s"+d;
+              if(!data[d].includes(":")){
+                c++;
+                let item = "s"+c;
                 schoolist[item] = data[d];
+              }
             }
             res.render('privateColleges', schoolist);
             console.log(data);
