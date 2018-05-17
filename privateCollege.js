@@ -8,7 +8,7 @@ let client  = redis.createClient();
 
 router.get('/',function(req, res, next){
 
-    client.keys('*', function(err, data){
+    client.keys('private;*', function(err, data){
         if(err){
             console.log(err);
         }

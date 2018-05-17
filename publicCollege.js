@@ -1,28 +1,33 @@
-
 var express = require('express');
 var router = express.Router();
-
 var redis = require('redis');
 
-//const client =
-router.get('/', function(req, res, next) {
 
-  //use client to get info
+let client  = redis.createClient();
 
 
-  res.render('publicColleges');
-});
-router.get('/berkeley', function(req, res, next) {
+router.get('/',function(req, res, next){
 
-//client.hgetall();
-
-  res.render('coursesAtCollege');
-});
-router.get('/UCLA', function(req, res, next) {
-  res.render('coursesAtCollege');
-});
-router.get('/michigan', function(req, res, next) {
-  res.render('coursesAtCollege');
+    client.keys('public;*', function(err, data){
+        if(err){
+            console.log(err);
+        }
+        else{
+            let schoolist = {};
+            let c=-1
+            for(let d=0; d<data.length; d++){
+              if(!data[d].includes(":")){
+                //console.log(client.hget(data[d],category))
+                c++;
+                let item = "s"+c;
+                schoolist[item] = data[d];
+              }
+            }
+            res.render('publicColleges', schoolist);
+            console.log(data);
+            console.log(schoolist.schoolist1);
+        }
+    });
 });
 
 module.exports = router;

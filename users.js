@@ -55,7 +55,8 @@ router.post('/addcollege', function(req, res, next){
 
     let category = req.body.category;
     let collegeName = req.body.name;
-    client.hmset(collegeName,
+    let key = category+";"+collegeName;
+    client.hmset(key,
      [
         'category', category,
         'collegeName', collegeName
@@ -72,7 +73,9 @@ router.post('/addcollege', function(req, res, next){
 });
 
 router.get('/goto/:id',function (req, res){
-    let id = req.params.id;
+    let title = req.params.id;
+    let index = title.indexOf(";")+1;
+    let id=title.substring(index);
     client.keys(id+':*',function(err,data){
         if(err){
             console.log(id);
@@ -82,7 +85,7 @@ router.get('/goto/:id',function (req, res){
             });
         }
         else{
-            console.log(req.params.id);
+            console.log(req.params.id+"is in goto route");
             let courselist = {};
 
             for(let d=0; d<data.length; d++){
