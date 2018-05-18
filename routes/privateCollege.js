@@ -8,7 +8,7 @@ let client  = redis.createClient();
 
 router.get('/',function(req, res, next){
 
-    client.keys('*', function(err, data){
+    client.keys('private;*', function(err, data){
         if(err){
             console.log(err);
         }
@@ -17,6 +17,7 @@ router.get('/',function(req, res, next){
             let c=-1
             for(let d=0; d<data.length; d++){
               if(!data[d].includes(":")){
+                //console.log(client.hget(data[d],category))
                 c++;
                 let item = "s"+c;
                 schoolist[item] = data[d];

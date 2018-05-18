@@ -32,7 +32,7 @@ router.get('/addCourse',function (req, res, next){
 router.post('/addCourse', function(req, res, next){
 
     let college = req.body.college;
-    let course = req.body.name;
+    let course = req.body.course;
     let key = college+":"+course;
     client.hmset(key,
      [
@@ -55,7 +55,8 @@ router.post('/addcollege', function(req, res, next){
 
     let category = req.body.category;
     let collegeName = req.body.name;
-    client.hmset(collegeName,
+    let key = category+";"+collegeName;
+    client.hmset(key,
      [
         'category', category,
         'collegeName', collegeName
@@ -72,9 +73,11 @@ router.post('/addcollege', function(req, res, next){
 });
 
 router.get('/goto/:id',function (req, res){
-    let id = req.params.id;
-    client.hgetall(id,function(err,obj){
-        if(!obj){
+    let title = req.params.id;
+    let index = title.indexOf(";")+1;
+    let id=title.substring(index);
+    client.keys(id+':*',function(err,data){
+        if(err){
             console.log(id);
             res.render('index',{
                 error: 'event does not exist',
@@ -82,17 +85,16 @@ router.get('/goto/:id',function (req, res){
             });
         }
         else{
-            console.log(req.params.id);
+            console.log(req.params.id+"is in goto route");
             let courselist = {};
-          client.keys(id:'*', function(err, data){
+
             for(let d=0; d<data.length; d++){
                 let item = "c"+d;
                 courselist[item] = data[d];
             }
 
-            obj.id = req.params.id;
             res.render('coursesAtCollege', courselist);
-          })
+
         }
     })
 });
